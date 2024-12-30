@@ -1,0 +1,47 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Be Vietnam Pro", serif;
+    font-style: normal;
+}
+
+body {
+    background-color: #1B1D1F;
+}
+
+.color1 {
+    color: #1B1D1F;
+}
+
+.color2 {
+    color: #282B30;
+}
+
+.color3 {
+    color: #6C727F;
+}
+
+.color4 {
+    color: #D2D5DA;
+}
+
+.font1 {
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.font2 {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.font3 {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.font4 {
+    font-weight: 700;
+    font-size: 12px;
+}
+

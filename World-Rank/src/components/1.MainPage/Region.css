@@ -1,0 +1,21 @@
+.region {
+    width: auto;
+    
+}
+.region > button {
+    background-color: #1B1D1F;
+    border: 0;
+    text-align: center;
+    padding: 10px;
+}
+
+.region > button:hover {
+    border: 0.5px solid #6C727F;
+    padding: 9.5px;
+    border-radius: 10px;
+}
+
+.btClicked{
+    background-color: red;
+    color: #D2D5DA;
+}
