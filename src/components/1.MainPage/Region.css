@@ -1,8 +1,10 @@
 .region {
     width: auto;
+    height: 40px;
     
 }
 .region > button {
+    display: inline;
     background-color: #1B1D1F;
     border: 0;
     text-align: center;
@@ -15,7 +17,9 @@
     border-radius: 10px;
 }
 
-.btClicked{
-    background-color: red;
+.btClicked > button{
+    background-color: #282B30;
     color: #D2D5DA;
+    border-radius: 10px;
+
 }
