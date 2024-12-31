@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 export default function MainPage() {
     const CountryFound = 234
     const regions = ["Americas", "Antartic", "Africa", "Asia", "Europe", "Oceania"];
-
+    let allCountries = [];
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -14,7 +14,8 @@ export default function MainPage() {
         fetch("https://restcountries.com/v3.1/all")
             .then((response) => response.json())
             .then((data) => {
-                setData(data);
+                allCountries = data;
+                setData(allCountries);
             })
             .catch((error) => console.error("Error fetching data:", error));
     }, []);
@@ -80,10 +81,10 @@ export default function MainPage() {
                     <InfoCountries
                         key={index}
                         flag={item.flags?.svg || "No Flag"}
-                        nameCountry={item.name?.common || "No Name"}
+                        name={item.name?.common || "No Name"}
                         population={item.population?.toLocaleString() || "N/A"}
                         area={item.area?.toLocaleString() || "N/A"}
-                        regionCt={item.region || "No Region"}
+                        region={item.region || "No Region"}
                     />
                 ))}
                 </div>

@@ -5,12 +5,14 @@ export default function InfoCountries(props) {
 
     return (
         <div className="infoComponent">
-            <div className="img" style={{ backgroundImage: `url("${props.img}")`}}></div>
+            <div className="img" style={{ backgroundImage: `url("${props.flag}")`}}></div>
             <span>{props.name}</span>
             <span>{props.population}</span>
             <span>{props.area}</span>
             <span>{props.region}</span>
+            
         </div>
+        
     )
 }
 
