@@ -4,33 +4,82 @@ import Region from "./Region"
 import { useState, useEffect } from "react";
 
 export default function MainPage() {
-    const CountryFound = 234
+
     const regions = ["Americas", "Antartic", "Africa", "Asia", "Europe", "Oceania"];
-    let allCountries = [];
-    const [data, setData] = useState([]);
+    const [allCountries, setAllCountries] = useState([]);
+    // const [filteredCountries, setFilteredCountries] = useState([]);
+    const [filter, setFilter] = useState({
+        sortby: "1",
+        region: {
+            americas: false,
+            antartic: false,
+            africa: false,
+            asia: false,
+            europe: false,
+            oceania: false,
+        },
+        status: {
+            member: false,
+            independient: true
+        }
+    })
 
     useEffect(() => {
         // Llamada a la API
         fetch("https://restcountries.com/v3.1/all")
             .then((response) => response.json())
             .then((data) => {
-                allCountries = data;
-                setData(allCountries);
+                setAllCountries(data);
             })
             .catch((error) => console.error("Error fetching data:", error));
     }, []);
+
+    function sortByChange(e) {
+        const value = e.target.value;
+        setFilter((prev) =>{
+            return {
+                ...prev,
+                sortby: value,
+            }
+        }
+        );    
+        console.log(value);
+        
+        
+                
+    }
+
+    function statusChange(e) {
+        const [name, checked] = e.target.name;
+        setFilter((prev) => {
+            return {
+                ...prev,
+                status: {
+                    ...prev.status,
+                    [name]: !checked
+
+                }
+            }
+        })
+
+    }
+
+
 
     return (
         <div className="mpContainer">
 
             <div className="header">
-                <span className="color3 font3">Found {CountryFound} countries</span>
+                <span className="color3 font3">Found {allCountries.length} countries</span>
                 <input className="font3 color3"type="text" placeholder="Search by Name, Region, Subregion"/>
             </div>
 
             <div className="filters">
                 <span className="font4 color3">Sort by</span>
-                <select className="color4 font3">
+                <select 
+                className="color4 font3"
+                value={filter.sortby}
+                onChange={sortByChange} >
                         <option value="1">Population</option>
                         <option value="2">Area (km²)</option>
                         <option value="3">Name</option>
@@ -55,12 +104,25 @@ export default function MainPage() {
                     <span className="font4 color3">Status</span>
                     
                     <div className="inputsFilter">
-                        <input type="checkbox" name="Member" id="member" />
-                        <label htmlFor="Member" className="font3 color4">Member of United Nations</label>                
+                        <input
+                            type="checkbox"
+                            name="member" 
+                            id="member"
+                            checked={filter.status.member}
+                            onChange={(e) => {statusChange(e)}} 
+                        />
+                        <label htmlFor="member" className="font3 color4">Member of United Nations</label>
                     </div>
+
                     <div className="inputsFilter">
-                        <input type="checkbox" name="Independient" id="independient" />
-                        <label htmlFor="Independient" className="font3 color4">Independient</label>
+                        <input
+                            type="checkbox"
+                            name="independient" 
+                            id="independient"
+                            checked={filter.status.independient}
+                            onChange={(e) => {statusChange(e)}} 
+                        />
+                        <label htmlFor="independient" className="font3 color4">Independient</label>
                     </div>
                     
                 </div>
@@ -77,7 +139,7 @@ export default function MainPage() {
                 <div className="line"></div>
 
                 <div className="info">
-                    {data.map((item, index) => (
+                    {allCountries.map((item, index) => (
                     <InfoCountries
                         key={index}
                         flag={item.flags?.svg || "No Flag"}

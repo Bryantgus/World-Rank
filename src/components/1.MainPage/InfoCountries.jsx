@@ -21,5 +21,6 @@ InfoCountries.propTypes = {
     population: PropTypes.string,
     area: PropTypes.string,
     region: PropTypes.string,
-    img: PropTypes.string
+    img: PropTypes.string,
+    flag: PropTypes.string
 }
