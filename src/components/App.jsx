@@ -1,5 +1,5 @@
-import MainPage from "./1.MainPage/MainPage"
 import "./App.css"
+import MainPage from "./1.MainPage/MainPage"
 
 export default function App() {
     
@@ -14,8 +14,8 @@ export default function App() {
                     <img src="/Logo.svg" alt="Logo Wr" />
                 </div>
             </div>
-        
-            <MainPage />
+            <MainPage />        
+       
             
         </div>
     )
