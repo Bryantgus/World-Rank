@@ -1,6 +1,6 @@
 import "./MainPage.css"
 import Region from "./Region";
-import InfoCountry from "./infoCountry";
+import InfoCountry from "./InfoCountry"; 
 import {useState, useEffect} from "react"
 
 export default function MainPage() {
@@ -52,8 +52,6 @@ export default function MainPage() {
         }
 
         /*Filtro por region */
-        const allRegionsFalse = Object.values(filter.region).every(value => !value);
-
         countriesFilterVar = countriesFilterVar.filter((item) => 
             filter.region[item.region]
         );
