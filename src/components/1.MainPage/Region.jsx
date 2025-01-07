@@ -4,7 +4,7 @@ import { useState } from "react"
 
 export default function Region(props) {
     
-    const [isClicked, setIsClicked] = useState(false);
+    const [isClicked, setIsClicked] = useState(true);
     return (
         <div className={`region ${props.classNameRegion} ${isClicked ? "clicked" : ""}`}>
             <button 

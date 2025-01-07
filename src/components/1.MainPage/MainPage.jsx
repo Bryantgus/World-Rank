@@ -5,26 +5,27 @@ import {useState, useEffect} from "react"
 
 export default function MainPage() {
     
-    const regions = ["Americas", "Antartic", "Africa", "Asia", "Europe", "Oceania"];
+    const regions = ["Americas", "Antarctic", "Africa", "Asia", "Europe", "Oceania"];
     
     
     const [infoCountries, setInfoCountries] = useState([]);
     const [filteredInfoCountries, setFilteredInfoCountries] = useState([]);
     const [filter, setFilter] = useState({
+        word: "",
         sortby: "area",
         region: {
-            Americas: false,
-            Antarctic: false,
-            Africa: false,
-            Asia: false,
-            Europe: false,
-            Oceania: false,
+            Americas: true,
+            Antarctic: true,
+            Africa: true,
+            Asia: true,
+            Europe: true,
+            Oceania: true,
         },
         status: {
-            member: false,
-            independient: false,
+            unMember: false,
+            independent: false,
         }
-    })
+    });
     /*Solicitud Api*/
     useEffect(() => {
         fetch('https://restcountries.com/v3.1/all')
@@ -39,47 +40,67 @@ export default function MainPage() {
     /*Filtrador de las countries*/
     useEffect(() => {
         
-        var sortedCountries = [...infoCountries]; // Copia del arreglo original
+        var countriesFilterVar = [...infoCountries]; // Copia del arreglo original
 
         /*Filtro por sortby */
-        
+        if (filter.sortby == "population") {
+            countriesFilterVar.sort((a, b) => a.population - b.population);
+        } else if (filter.sortby === "name") {
+            countriesFilterVar.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        } else if (filter.sortby === "area") { 
+            countriesFilterVar.sort((a, b) => a.area - b.area);
+        }
 
         /*Filtro por region */
         const allRegionsFalse = Object.values(filter.region).every(value => !value);
-        if (allRegionsFalse)
-        sortedCountries = sortedCountries.filter((item) => 
+
+        countriesFilterVar = countriesFilterVar.filter((item) => 
             filter.region[item.region]
         );
+        
 
-        if (filter.sortby == "population") {
-            sortedCountries.sort((a, b) => a.population - b.population);
-        } else if (filter.sortby === "name") {
-            sortedCountries.sort((a, b) => a.name.common.localeCompare(b.name.common));
-        } else if (filter.sortby === "area") { 
-            sortedCountries.sort((a, b) => a.area - b.area);
+        /*Filtro por status*/
+        if (filter.status.unMember) {
+            countriesFilterVar = countriesFilterVar.filter((item) => 
+                item.unMember === true);
         }
-        setFilteredInfoCountries(sortedCountries);
+        if (filter.status.independent) {
+            countriesFilterVar = countriesFilterVar.filter((item) => 
+                item.independent === true);
+        }   
+        
+        if (filter.word !== "") {
+            countriesFilterVar = countriesFilterVar.filter((item) =>
+                item.name.common.toLowerCase().includes(filter.word.toLowerCase())
+            );
+        }
+        
+
+
+        setFilteredInfoCountries(countriesFilterVar);
 
         
     
 
     }, [filter, infoCountries,]);
     
-    const countriesFound = infoCountries.length;
 
     return (
         <div className="mpContainer">
             <div className="headerMp font2 color3">
-                <span>Found {countriesFound} countries</span>
+                <span>Found {filteredInfoCountries.length} countries</span>
                 <input 
                 type="text" 
                 placeholder="Search by Name, Region, Subregion"
                 className="font2"
+                onChange={(e) => 
+                    setFilter((prev) => ({
+                        ...prev,
+                        word: e.target.value
+                    }))}
                 />
             </div>
             <div className="filters">
-                <button onClick={() => console.log(filter)
-                }>click</button>
                 <label htmlFor="sortBy" className="font4 color3">Sort by</label>
                 <select 
                 name="sort" 
@@ -124,7 +145,7 @@ export default function MainPage() {
                 <span className="font4 color3">Status</span>
                 <div className="statusContainer">
                     <input type="checkbox" 
-                    checked={filter.status.member} 
+                    checked={filter.status.unMember} 
                     name="member" 
                     id="inputMember" 
                     onChange={() => 
@@ -132,16 +153,16 @@ export default function MainPage() {
                             ...prev,
                             status: {
                                 ...prev.status,
-                                member: !prev.status.member,
+                                unMember: !prev.status.unMember,
                             }
                         }))}
                     />
-                    <label htmlFor="member" className="font2 color4">Member of the United Nations</label>
+                    <label htmlFor="member" className="font2 color3">Member of the United Nations</label>
                 </div>
                 <div className="statusContainer">
                     <input 
                     type="checkbox" 
-                    checked={filter.status.independient} 
+                    checked={filter.status.independent} 
                     name="member" 
                     id="inputMember"
                     onChange={() => 
@@ -149,12 +170,12 @@ export default function MainPage() {
                             ...prev,
                             status: {
                                 ...prev.status,
-                                independient: !prev.status.independient,
+                                independent: !prev.status.independent,
                             }
                         }))}
                     
                     />
-                    <label htmlFor="member" className="font2 color4">Member of the United Nations</label>
+                    <label htmlFor="member" className="font2 color3">independent</label>
                 </div>
             </div>
 
