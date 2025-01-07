@@ -1,0 +1,41 @@
+.flag {
+    width: 80px;
+    height: 100px;
+    display: flex;
+    justify-content: center; /* Centra la imagen horizontalmente si sobra espacio */
+    align-items: center; /* Centra la imagen verticalmente si sobra espacio */
+    overflow: hidden; /* Evita que el contenido desborde el div */
+}
+
+.flag > img {
+    max-width: 100%; /* Ajusta la imagen proporcionalmente al ancho del div */
+    max-height: 100%; /* Ajusta la imagen proporcionalmente al alto del div */
+    width: auto; /* Permite que la imagen conserve sus proporciones */
+    height: auto;
+}
+
+.infoCountry {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.infoCountry > span {
+    color: #D2D5DA;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.infoCountry > span:nth-child(2){
+    width: 255px;
+    margin-left: 30px;
+}
+
+.infoCountry > span:nth-child(3){
+    width: 215px;
+}
+
+.infoCountry > span:nth-child(4){
+    width: 210px;
+}
+
