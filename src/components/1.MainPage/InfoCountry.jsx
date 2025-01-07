@@ -17,9 +17,9 @@ export default function InfoCountry(props) {
 }
 
 InfoCountry.propTypes = {
-    img: PropTypes.string,
-    name: PropTypes.string,
+    img: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     population: PropTypes.string,
     area: PropTypes.string,
     regionInfo: PropTypes.string,
-}
+};
