@@ -2,17 +2,20 @@ import "./MainPage.css"
 import Region from "./Region";
 import InfoCountry from "./InfoCountry"; 
 import {useState, useEffect} from "react"
+import countriesData from "./../../countriesData.json"
 
 export default function MainPage() {
     
     const regions = ["Americas", "Antarctic", "Africa", "Asia", "Europe", "Oceania"];
     
     
-    const [infoCountries, setInfoCountries] = useState([]);
+    const infoCountries = countriesData;
+
+
     const [filteredInfoCountries, setFilteredInfoCountries] = useState([]);
     const [filter, setFilter] = useState({
         word: "",
-        sortby: "area",
+        sortby: "population",
         region: {
             Americas: true,
             Antarctic: true,
@@ -26,17 +29,7 @@ export default function MainPage() {
             independent: false,
         }
     });
-    /*Solicitud Api*/
-    useEffect(() => {
-        fetch('https://restcountries.com/v3.1/all')
-            .then(response => response.json())
-            .then(data => {
-                setInfoCountries(() => data);
-            })
-            .catch(error => {
-                console.log(error);  
-            })
-    }, []);
+
     /*Filtrador de las countries*/
     useEffect(() => {
         
